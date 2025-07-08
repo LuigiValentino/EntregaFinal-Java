@@ -1,0 +1,888 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AlienHardware - Especialistas en Componentes de PC</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&family=Orbitron:wght@700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
+    <link rel="stylesheet" th:href="@{/css/main.css}">
+    <style>
+           :root {
+            --primary: #083D77;       
+            --secondary: #7C98B3;     
+            --light: #ACCBE1;         
+            --accent: #FF7F11;       
+            --dark: #062352; 
+            --gray: #94a3b8;        
+            --dark-gray: #334155;   
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Montserrat', sans-serif;
+            color: var(--dark);
+            background-color: #f8fafc;
+            line-height: 1.6;
+        }
+        
+        h1, h2, h3, h4, h5 {
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: var(--dark);
+        }
+        
+        h1 {
+            font-size: 2.5rem;
+            text-align: center;
+            margin: 2rem 0;
+            position: relative;
+        }
+        
+        h1::after {
+            content: '';
+            display: block;
+            width: 80px;
+            height: 4px;
+            background: var(--accent);
+            margin: 0.5rem auto;
+        }
+        
+        a {
+            text-decoration: none;
+            color: var(--primary);
+            transition: all 0.3s ease;
+        }
+        
+        a:hover {
+            color: var(--accent);
+        }
+        
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1.5rem;
+        }
+        
+        header {
+            background-color: var(--primary);
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        
+        .logo {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: white;
+            display: flex;
+            align-items: center;
+        }
+        
+        .logo span {
+            color: var(--accent);
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 1.5rem;
+            align-items: center;
+        }
+        
+        .nav-links a {
+            color: white;
+            font-weight: 500;
+            padding: 0.5rem 0;
+            position: relative;
+        }
+        
+        .nav-links a:hover {
+            color: var(--light);
+        }
+        
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: var(--accent);
+            transition: width 0.3s ease;
+        }
+        
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+        
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: white;
+            font-weight: 500;
+        }
+        
+        .user-info a {
+            color: var(--accent);
+        }
+        
+        .cart-link {
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            color: white !important;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+        
+        .cart-link:hover {
+            color: white;
+            transform: translateY(-2px);
+        }
+        
+        .cart-link:hover::after {
+            width: 0 !important;
+        }
+        
+        .hero {
+            background: linear-gradient(rgba(8, 61, 119, 0.9), rgba(8, 61, 119, 0.7)), url('../fotos-front/hero.jpg');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            padding: 5rem 0;
+            text-align: center;
+        }
+        
+        .hero-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .hero h2 {
+            font-size: 3rem;
+            color: white;
+            margin-bottom: 1.5rem;
+        }
+        
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+        }
+        
+        .btn {
+            display: inline-block;
+            padding: 0.8rem 2rem;
+            background: var(--accent);
+            color: white;
+            font-weight: 600;
+            border-radius: 4px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+        
+        .btn:hover {
+            background: #e0700f;
+            transform: translateY(-3px);
+            box-shadow: 0 4px 12px rgba(255, 127, 17, 0.3);
+            color: black;
+
+        }
+        
+        .featured-products {
+            padding: 4rem 0;
+        }
+        
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+        
+        .product-card {
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .product-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+        }
+        
+        .product-image {
+            height: 200px;
+            background-color: var(--light);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+        
+        .product-image img {
+            max-width: 80%;
+            max-height: 80%;
+            object-fit: contain;
+            transition: transform 0.5s ease;
+        }
+        
+        .product-card:hover .product-image img {
+            transform: scale(1.05);
+        }
+        
+        .product-info {
+            padding: 1.5rem;
+        }
+        
+        .product-info h3 {
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .product-price {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin: 0.5rem 0;
+        }
+        
+        .product-description {
+            color: var(--dark-gray);
+            margin-bottom: 1rem;
+            min-height: 60px;
+        }
+        
+        .product-category {
+            display: inline-block;
+            background: #e0f2fe;
+            color: var(--primary);
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+        
+        .about-section {
+            background: linear-gradient(to bottom, #bcddfd, #e2e8f0);
+            padding: 4rem 0;
+            border-top: 1px solid #e2e8f0;
+            border-bottom: 1px solid #9daec5;
+        }
+        
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+        
+        .feature-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 8px;
+            text-align: center;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+            transition: all 0.3s ease;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+        }
+        
+        .feature-icon {
+            font-size: 2.5rem;
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+        
+        .feature-card h3 {
+            font-size: 1.3rem;
+            margin-bottom: 1rem;
+        }
+        
+        .services-section {
+            padding: 5rem 0;
+            background: linear-gradient(to right, var(--primary), var(--dark));
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .services-section h2 {
+            color: white;
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+        
+        .services-slider {
+            display: flex;
+            gap: 2rem;
+            padding: 1rem;
+            overflow-x: auto;
+            scroll-snap-type: x mandatory;
+            scroll-behavior: smooth;
+            -webkit-overflow-scrolling: touch;
+            scrollbar-width: none;
+        }
+        
+        .services-slider::-webkit-scrollbar {
+            display: none;
+        }
+        
+        .service-card {
+            scroll-snap-align: start;
+            flex: 0 0 auto;
+            width: 300px;
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+            transition: all 0.4s ease;
+        }
+        
+        .service-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 12px 25px rgba(0,0,0,0.25);
+        }
+        
+        .service-header {
+            padding: 2rem;
+            text-align: center;
+            color: white;
+        }
+        
+        .service-1 .service-header {
+            background: linear-gradient(135deg, var(--accent), #ff9a44);
+        }
+        
+        .service-2 .service-header {
+            background: linear-gradient(135deg, var(--primary), #0a4a9e);
+        }
+        
+        .service-3 .service-header {
+            background: linear-gradient(135deg, var(--secondary), #8fa8c7);
+        }
+        
+        .service-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+        
+        .service-title {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .service-body {
+            padding: 1.5rem;
+            color: var(--dark);
+        }
+        
+        .service-body ul {
+            list-style: none;
+            margin: 1rem 0;
+        }
+        
+        .service-body li {
+            padding: 0.5rem 0;
+            display: flex;
+            align-items: flex-start;
+        }
+        
+        .service-body li::before {
+            content: '✓';
+            color: var(--accent);
+            font-weight: bold;
+            margin-right: 0.5rem;
+        }
+        
+        .service-btn {
+            display: block;
+            text-align: center;
+            margin-top: 1rem;
+            padding: 0.8rem 1.5rem;
+            background: var(--primary);
+            color: white;
+            border-radius: 4px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+        
+        .service-btn:hover {
+            background: var(--dark);
+            transform: translateY(-3px);
+        }
+        
+        .slider-nav {
+            display: flex;
+            justify-content: center;
+            gap: 0.5rem;
+            margin-top: 2rem;
+        }
+        
+        .slider-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.3);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .slider-dot.active {
+            background: var(--accent);
+            transform: scale(1.2);
+        }
+        
+        .contact-section {
+            padding: 5rem 0;
+            background: var(--light);
+        }
+        
+        .contact-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            margin-top: 2rem;
+        }
+        
+        .contact-info {
+            padding: 2rem;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+        }
+        
+        .contact-info h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+            color: var(--primary);
+        }
+        
+        .contact-item {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .contact-icon {
+            font-size: 1.5rem;
+            color: var(--accent);
+            min-width: 40px;
+        }
+        
+        .contact-text h4 {
+            font-size: 1.1rem;
+            margin-bottom: 0.3rem;
+        }
+        
+        .map-container {
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            height: 100%;
+        }
+        
+        .map-placeholder {
+            background: linear-gradient(135deg, var(--primary), var(--dark));
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.2rem;
+            text-align: center;
+            padding: 2rem;
+        }
+        
+        footer {
+            background: var(--dark);
+            color: var(--light);
+            padding: 3rem 0 1.5rem;
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+        
+        .footer-column h4 {
+            color: white;
+            font-size: 1.3rem;
+            margin-bottom: 1.5rem;
+            position: relative;
+        }
+        
+        .footer-column h4::after {
+            content: '';
+            position: absolute;
+            bottom: -0.5rem;
+            left: 0;
+            width: 40px;
+            height: 3px;
+            background: var(--accent);
+        }
+        
+        .footer-links {
+            list-style: none;
+        }
+        
+        .footer-links li {
+            margin-bottom: 0.8rem;
+        }
+        
+        .footer-links a {
+            color: var(--light);
+            transition: all 0.3s ease;
+        }
+        
+        .footer-links a:hover {
+            color: var(--accent);
+            padding-left: 5px;
+        }
+        
+        .contact-info-list {
+            list-style: none;
+        }
+        
+        .contact-info-list li {
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: flex-start;
+            gap: 0.8rem;
+        }
+        
+        .contact-info-list i {
+            color: var(--accent);
+            font-size: 1.2rem;
+            margin-top: 0.2rem;
+        }
+        
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+        
+        .social-links a {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 50%;
+            color: white;
+            transition: all 0.3s ease;
+        }
+        
+        .social-links a:hover {
+            background: var(--accent);
+            transform: translateY(-3px);
+        }
+        
+        .copyright {
+            text-align: center;
+            padding-top: 1.5rem;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            color: var(--light);
+            font-size: 0.9rem;
+        }
+        
+        @media (max-width: 768px) {
+            .nav-links {
+                width: 100%;
+                margin-top: 1rem;
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 0;
+            }
+            
+            .nav-links > * {
+                margin-bottom: 0.5rem;
+            }
+            
+            .hero h2 {
+                font-size: 2.2rem;
+            }
+            
+            .hero p {
+                font-size: 1rem;
+            }
+            
+            .products-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .contact-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+
+</head>
+<body>
+    <div th:replace="fragments/header :: header"></div>
+    
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <h2>EL FUTURO DEL HARDWARE ESTÁ AQUÍ</h2>
+                <p>En AlienHardware, llevamos la tecnología al límite. Descubre los componentes más avanzados para gamers, creadores de contenido y profesionales del diseño.</p>
+                <a href="/shop" class="btn">Explorar Tienda</a>
+            </div>
+        </div>
+    </section>
+    
+    <section class="featured-products">
+        <div class="container">
+            <h1>Productos Destacados</h1>
+            
+            <div th:if="${#lists.isEmpty(featuredProducts)}">
+                <p class="text-center">No hay productos destacados disponibles en este momento.</p>
+            </div>
+            
+            <div class="products-grid">
+                <div th:each="prod : ${featuredProducts}" class="product-card">
+                    <div class="product-info">
+                        <span class="product-category" th:text="${prod.category}">Categoría</span>
+                        <h3 th:text="${prod.name}" style="margin-top: 4px;">Nombre del Producto</h3>
+                        <p class="product-price" th:text="${'$' + prod.price}">$0.00</p>
+                        <p class="product-description" th:text="${prod.description}">Descripción del producto destacando sus características principales.</p>
+                    </div>
+                </div>
+            </div>
+            
+                <a href="/shop" class="btn text-center" style="margin-top: 20px;">Ver Todos los Productos</a>
+        </div>
+    </section>
+    
+    <section class="about-section">
+        <div class="container">
+            <h1>¿Por Qué Elegir AlienHardware?</h1>
+            <p class="text-center" style="max-width: 800px; margin: 0 auto 2rem;">En AlienHardware nos especializamos en proporcionar componentes de hardware de la más alta calidad para satisfacer las necesidades de los entusiastas de la tecnología más exigentes.</p>
+            
+            <div class="features">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="bi bi-cpu"></i>
+                    </div>
+                    <h3>Productos de Calidad</h3>
+                    <p>Trabajamos con los principales fabricantes para ofrecerte componentes de alto rendimiento y durabilidad.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="bi bi-truck"></i>
+                    </div>
+                    <h3>Envío Rápido</h3>
+                    <p>Recibe tus productos en 24-48 horas con nuestro servicio de envío express disponible en toda la región.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="bi bi-shield-check"></i>
+                    </div>
+                    <h3>Garantía Extendida</h3>
+                    <p>Todos nuestros productos incluyen garantía de 2 años y soporte técnico especializado.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="bi bi-currency-exchange"></i>
+                    </div>
+                    <h3>Precios Competitivos</h3>
+                    <p>Ofertas exclusivas y los mejores precios del mercado en componentes de última generación.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+   
+    
+    <section class="contact-section">
+        <div class="container">
+            <h1>¿Cómo Encontrarnos?</h1>
+            <p class="text-center" style="max-width: 800px; margin: 0 auto 2rem;">Visítanos en nuestra tienda física o contáctanos para cualquier consulta sobre nuestros productos y servicios.</p>
+            
+            <div class="contact-grid">
+                <div class="contact-info">
+                    <h3>Información de Contacto</h3>
+                    
+                    <div class="contact-item">
+                        <div class="contact-icon">
+                            <i class="bi bi-geo-alt"></i>
+                        </div>
+                        <div class="contact-text">
+                            <h4>Dirección</h4>
+                            <p>Av. Tecnológica 1234, Ciudad Digital</p>
+                        </div>
+                    </div>
+                    
+                    <div class="contact-item">
+                        <div class="contact-icon">
+                            <i class="bi bi-telephone"></i>
+                        </div>
+                        <div class="contact-text">
+                            <h4>Teléfono</h4>
+                            <p>+54 11 2345-6789</p>
+                        </div>
+                    </div>
+                    
+                    <div class="contact-item">
+                        <div class="contact-icon">
+                            <i class="bi bi-envelope"></i>
+                        </div>
+                        <div class="contact-text">
+                            <h4>Email</h4>
+                            <p>info@alienhardware.com</p>
+                        </div>
+                    </div>
+                    
+                    <div class="contact-item">
+                        <div class="contact-icon">
+                            <i class="bi bi-clock"></i>
+                        </div>
+                        <div class="contact-text">
+                            <h4>Horarios de Atención</h4>
+                            <p>Lunes a Viernes: 9:00 - 19:00<br>Sábados: 10:00 - 14:00<br>Domingos: Cerrado</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="map-container">
+                    <div class="map-placeholder">
+                        <p>Mapa de Ubicación<br>Av. Tecnológica 1234, Ciudad Digital</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <div class="logo">Alien<span>Hardware</span></div>
+                    <p style="margin: 1.5rem 0; color: var(--light);">Especialistas en hardware de alto rendimiento para gamers, creadores de contenido y profesionales.</p>
+                </div>
+                
+                <div class="footer-column">
+                    <h4>Enlaces Rápidos</h4>
+                    <ul class="footer-links">
+                        <li><a href="/shop">Tienda</a></li>
+                        <li><a href="/admin">Panel de Administración</a></li>
+                    </ul>
+                </div>
+                
+                
+                <div class="footer-column">
+                    <h4>Contacto</h4>
+                    <ul class="contact-info-list">
+                        <li>
+                            <i class="bi bi-geo-alt"></i>
+                            <span>Av. Tecnológica 1234, Ciudad Digital</span>
+                        </li>
+                        <li>
+                            <i class="bi bi-telephone"></i>
+                            <span>+54 11 2345-6789</span>
+                        </li>
+                        <li>
+                            <i class="bi bi-envelope"></i>
+                            <span>soporte@alienhardware.com</span>
+                        </li>
+                        <li>
+                            <i class="bi bi-clock"></i>
+                            <span>Lun-Vie: 9am - 7pm<br>Sáb: 10am - 2pm</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="project-notice">
+                <p><strong>AVISO IMPORTANTE:</strong> Este sitio web es un proyecto educativo y no debe ser tomado como una tienda real. Toda la información y productos presentados son ficticios y forman parte de un ejercicio académico.</p>
+            </div>
+            <br>
+            <div class="copyright">
+                <p>&copy; 2025 Luigi Adducci. | Proyecto final Comisión 25026 - Java Backend</p>
+            </div>
+        </div>
+    </footer>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const slider = document.querySelector('.services-slider');
+            const dots = document.querySelectorAll('.slider-dot');
+            let currentIndex = 0;
+            
+            function updateDots(index) {
+                dots.forEach((dot, i) => {
+                    if (i === index) {
+                        dot.classList.add('active');
+                    } else {
+                        dot.classList.remove('active');
+                    }
+                });
+            }
+            
+            dots.forEach((dot, index) => {
+                dot.addEventListener('click', () => {
+                    currentIndex = index;
+                    slider.scrollTo({
+                        left: index * 320,
+                        behavior: 'smooth'
+                    });
+                    updateDots(currentIndex);
+                });
+            });
+            
+            slider.addEventListener('scroll', () => {
+                const scrollPosition = slider.scrollLeft;
+                const cardWidth = 300 + 20;
+                currentIndex = Math.round(scrollPosition / cardWidth);
+                updateDots(currentIndex);
+            });
+            
+            setInterval(() => {
+                currentIndex = (currentIndex + 1) % dots.length;
+                slider.scrollTo({
+                    left: currentIndex * 320,
+                    behavior: 'smooth'
+                });
+                updateDots(currentIndex);
+            }, 5000);
+        });
+    </script>
+</body>
+</html>

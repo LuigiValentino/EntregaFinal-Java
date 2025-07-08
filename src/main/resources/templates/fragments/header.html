@@ -1,0 +1,20 @@
+<header>
+    <div class="container">
+        <nav>
+            <a href="/" class="logo">Alien<span>Hardware</span></a>
+            <div class="nav-links">
+                <a href="/shop">Tienda</a>
+                <div th:if="${loggedUser != null}" class="user-info">
+                    Bienvenido, <b th:text="${loggedUser.nombre}">Usuario</b> |
+                    <a href="/logout">Salir</a>
+                </div>
+                <div th:if="${loggedUser == null}">
+                    <a href="/auth/login">Ingresar</a>
+                </div>
+                <a class="cart-link" th:href="@{/cart}">
+                    <i class="bi bi-cart"></i> <span th:text="${cartSize != null ? cartSize : 0}">0</span>
+                </a>
+            </div>
+        </nav>
+    </div>
+</header>
